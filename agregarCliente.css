@@ -1,0 +1,266 @@
+.labels{
+    font-size: 40px;
+    font-family: 'Segoe UI';
+    margin-left: 30%;
+}
+.contenedorInputs{
+    position: relative;
+    align-items: center;
+}
+/* Input container */
+.input-container {
+    position: relative;
+    margin: 20px;
+  }
+  
+  /* Input field */
+  .input-field {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    outline: none;
+    background-color: transparent;
+  }
+  
+  /* Input label */
+  .input-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    color: rgba(204, 204, 204, 0);
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+  
+  /* Input highlight */
+  .input-highlight {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background-color: #007bff;
+    transition: all 0.3s ease;
+  }
+  
+  /* Input field:focus styles */
+  .input-field:focus + .input-label {
+    top: -20px;
+    font-size: 12px;
+    color: #007bff;
+  }
+  
+  .input-field:focus + .input-label + .input-highlight {
+    width: 100%;
+  }
+
+  .Titulo{
+    position: absolute;
+    left: 43%;
+    top: 10%;
+  }
+
+
+  
+  /*agregar telefono*/
+  /*agregar telefono*/
+  /*agregar telefono*/
+  /*agregar telefono*/
+  .inputNombre { 
+    font-family: 'Segoe UI'; /*Segoe ui font */
+    font-size: 50%;
+    text-align: justify;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    position: absolute;
+    left: 49%;
+    top: 41%;
+    max-width: 16%;
+  }
+  
+  .inputNombre label.text { 
+    font-family: 'Segoe UI'; /*Segoe ui font */
+    font-size: medium;
+    text-align: end;
+    font-weight: 900; 
+    color: black;
+    position: relative;
+    margin: 2 3 4 30%;
+    padding: 0 3px;
+    background: #F2F2F2;
+    width: fit-content;
+  }
+  
+  .inputNombre input[type=text].input {
+    padding: 5% 4%;
+    font-size: 0.90rem;
+    border: 10% #7c7c7c;
+    border-radius: 2%;
+    background: white;
+  }
+
+
+
+
+
+
+
+  /*agregar telefono*/
+  /*agregar telefono*/
+  /*agregar telefono*/
+  /*agregar telefono*/
+  .inputApellido { 
+    font-family: 'Segoe UI'; /*Segoe ui font */
+    font-size: 50%;
+    text-align: justify;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    position: absolute;
+    left: 49%;
+    top: 53%;
+    max-width: 16%;
+  }
+  
+  .inputApellido label.text { 
+    font-family: 'Segoe UI'; /*Segoe ui font */
+    font-size: medium;
+    text-align: end;
+    font-weight: 900; 
+    color: black;
+    position: relative;
+    margin: 2 3 4 30%;
+    padding: 0 3px;
+    background: #F2F2F2;
+    width: fit-content;
+  }
+  
+  .inputApellido input[type=text].input {
+    padding: 5% 4%;
+    font-size: 0.90rem;
+    border: 10% #7c7c7c;
+    border-radius: 2%;
+    background: white;
+  }
+
+
+
+
+
+    /*agregar telefono*/
+  /*agregar telefono*/
+  /*agregar telefono*/
+  /*agregar telefono*/
+  .inputTelefono { 
+    font-family: 'Segoe UI'; /*Segoe ui font */
+    font-size: 50%;
+    text-align: justify;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    position: absolute;
+    left: 49%;
+    top: 65%;
+    max-width: 16%;
+  }
+  
+  .inputTelefono label.text { 
+    font-family: 'Segoe UI'; /*Segoe ui font */
+    font-size: medium;
+    text-align: end;
+    font-weight: 900; 
+    color: black;
+    position: relative;
+    margin: 2 3 4 30%;
+    padding: 0 3px;
+    background: #F2F2F2;
+    width: fit-content;
+  }
+  
+  .inputTelefono input[type=text].input {
+    padding: 5% 4%;
+    font-size: 0.90rem;
+    border: 10% #7c7c7c;
+    border-radius: 2%;
+    background: white;
+  }
+
+
+
+
+
+  /*Input de Cancelar, aceptar y guardar */ 
+  /*Input de Cancelar, aceptar y guardar */
+  /*Input de Cancelar, aceptar y guardar */
+  .botonSiguienteGuardar{
+    display: flex;
+    width: 100px;
+    height: 100px;
+    left: 50%;
+    top: 28%;
+  }
+  .botonSiguiente{
+    display: flex;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 65%;
+    top: 80%;
+  }
+  .botonGuardar{
+    display: flex;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 45%;
+    top: 80%;
+  }
+  .botonSiguiente button{
+  color: #090909;
+  padding: 0.7em 1.7em;
+  font-size: 18px;
+  border-radius: 0.5em;
+  background: #e8e8e8;
+  border: 1px solid #e8e8e8;
+  transition: all .3s;
+  box-shadow: 6px 6px 12px #c5c5c5,
+  -6px -6px 12px #ffffff;
+  }
+  .botonSiguiente button:hover{
+  border: 3px solid #7c7c7c;
+  }
+  .botonSiguiente button:active{
+  box-shadow: 4px 4px 12px #7c7c7c,
+  -4px -4px 12px #7c7c7c;
+  }
+
+  .botonGuardar button{
+  color: #090909;
+  padding: 0.7em 1.7em;
+  font-size: 18px;
+  border-radius: 0.5em;
+  background: #e8e8e8;
+  border: 1px solid #e8e8e8;
+  transition: all .3s;
+  box-shadow: 6px 6px 12px #c5c5c5,
+  -6px -6px 12px #ffffff;
+  }
+
+  .botonGuardar button:hover{
+  border: 3px solid #7c7c7c;
+  }
+  .botonGuardar button:active{
+  box-shadow: 4px 4px 12px #7c7c7c,
+  -4px -4px 12px #7c7c7c;
+  }
+  
+  
+  

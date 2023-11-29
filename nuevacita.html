@@ -1,0 +1,66 @@
+<html lang="es">
+  <head>
+    <meta charset="utf-8"/>
+     <title>HAAR</title>
+      <link rel="stylesheet" href="nuevacita.css">
+  </head>
+  <body>
+    <div class="contenedor"> <!--haar contenedor-->
+      <img class="logo" src="imagenes/HAARHD.png" />
+      <div class="botones">
+          <div class="botones">
+              <button class="btn btn-1 btn-sep icon-info">
+                <img src="imagenes/IconMenu.png" />
+                <label>Menu</label>
+              </button>
+            </div>
+          
+            <div class="botones">
+              <button class="btn btn-2 btn-sep icon-cart">
+                <img src="imagenes/IconCalendar.png" />
+                <label>Nueva Cita</label>
+              </button>
+            </div>
+          
+            <div class="botones">
+              <button class="btn btn-3 btn-sep icon-heart">
+                <img src="imagenes/IconClients.png" />
+                <label>Clientes</label>
+              </button>
+          </div>
+      </div> 
+  </div>
+  </div>
+    <div class="contenedor2"><!--Contenedor citas-->
+      <div class="Citas">
+        <form id="form-cita"></form>
+          <label for="servicio">Servicio:</label>
+          <input type="text" id="servicio" required>
+        </form>
+      </div>
+      <div>
+          <label for="cliente">Cliente:</label>
+          <input type="text" id="cliente" required>
+      </div>
+      <div>
+          <label for="Fecha">Fecha:</label>
+          <input type="date" id="fecha" required>
+      </div>
+      <div>
+          <label for="hora">Hora:</label>
+          <input type="time" id="hora" required></input>
+      </div>
+          <button type="button" onclick="agregarCita()">Agregar Cita</button>
+      </div>
+    </div>
+  </div>
+    <div class="botonSiguienteGuardar"> <!--Boton de siguiente-->
+      <div class="botonSiguiente">
+      <button>Siguiente</button> 
+    </div>
+    <div class="botonGuardar">
+      <button>Guardar</button>
+    </div>
+  </div>
+  </body>
+</html>
