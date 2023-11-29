@@ -4,6 +4,7 @@
 
 package com.mycompany.haar;
 
+
 /**
  *
  * @author fabyb
@@ -11,6 +12,19 @@ package com.mycompany.haar;
 public class HAAR {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+                // Ejecutar la aplicación
+        java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            Login frame = new Login(); // Reemplaza NewJFrame con el nombre de tu clase JFrame
+            frame.setVisible(true);
+        }
+    });
+         java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            Cobro frame = new Cobro(); // Reemplaza NewJFrame con el nombre de tu clase JFrame
+            frame.setVisible(true);
+        }
+
+    });
     }
 }
