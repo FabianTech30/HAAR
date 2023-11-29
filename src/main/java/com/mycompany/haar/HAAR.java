@@ -11,6 +11,11 @@ package com.mycompany.haar;
 public class HAAR {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            Login frame = new Login(); // Reemplaza NewJFrame con el nombre de tu clase JFrame
+            frame.setVisible(true);
+        }
+    });
     }
 }
