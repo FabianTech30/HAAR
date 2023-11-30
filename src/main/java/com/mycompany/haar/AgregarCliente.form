@@ -139,7 +139,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="jButton6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="AGENDAR CITA"/>
+        <Property name="text" type="java.lang.String" value="AGENDAR CLIENTE"/>
         <Property name="name" type="java.lang.String" value="btnAgregarCitaAC" noResource="true"/>
       </Properties>
       <Events>

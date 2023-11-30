@@ -16,7 +16,6 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         menu = new Menu();
-        btnIngresar.setEnabled(false);
     }
 
     /**
@@ -117,18 +116,24 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        //edicion botones
+        if((txtUsuario.getText().trim()).isEmpty() ||(txtUsuario.getText().trim()).isBlank()){
+        JOptionPane.showMessageDialog(null, "El campo no puede ser vacio","Error",JOptionPane.ERROR_MESSAGE);
+        btnIngresar.setEnabled(false);
+       }
+        else{
         Menu a = new Menu();  
         a.setVisible(true);
         this.dispose();
+        btnIngresar.setEnabled(true);
+        }
+
+
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-        if((txtUsuario.getText().trim()).isEmpty() ||(txtUsuario.getText().trim()).isBlank()){
-            JOptionPane.showMessageDialog(null, "El campo no puede ser vacio","Error",JOptionPane.ERROR_MESSAGE);
-            btnIngresar.setEnabled(false);
-        }else{
-            btnIngresar.setEnabled(true);
-        }
+
+        
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     public static void main(String args[]) {
