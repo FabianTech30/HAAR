@@ -4,6 +4,9 @@
  */
 package com.mycompany.haar;
 
+import javax.swing.JOptionPane;
+
+
 /**
  *
  * @author fabyb
@@ -13,6 +16,9 @@ public class Menu extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
+
+        
+    
     public Menu() {
         initComponents();
     }
@@ -73,6 +79,7 @@ public class Menu extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jButton1.setText("Cobrar");
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.setName("btnCobro1"); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -177,7 +184,10 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        Menu a = new Menu();
+        a.setVisible(true);
+        this.dispose();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -242,4 +252,10 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     // End of variables declaration//GEN-END:variables
+
+
+
+        
+    
+  
 }

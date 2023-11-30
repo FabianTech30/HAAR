@@ -128,7 +128,6 @@ public class Login extends javax.swing.JFrame {
         btnIngresar.setEnabled(true);
         }
 
-
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
