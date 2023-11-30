@@ -37,7 +37,6 @@ public class AgregarCliente extends javax.swing.JFrame {
         jTextField5 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(1280, 720));
         setSize(new java.awt.Dimension(1280, 720));
 
@@ -47,6 +46,14 @@ public class AgregarCliente extends javax.swing.JFrame {
 
         jLabel4.setText("Telefono:");
 
+        jTextField1.setName("txtNombreAC"); // NOI18N
+        jTextField1.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                jTextField1InputMethodTextChanged(evt);
+            }
+        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -65,6 +72,7 @@ public class AgregarCliente extends javax.swing.JFrame {
         );
 
         jButton6.setText("AGENDAR CITA");
+        jButton6.setName("btnAgregarCitaAC"); // NOI18N
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -72,18 +80,21 @@ public class AgregarCliente extends javax.swing.JFrame {
         });
 
         jButton7.setText("VOLVER");
+        jButton7.setName("btnVolverAC"); // NOI18N
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
 
+        jTextField4.setName("txtApellidoAC"); // NOI18N
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField4ActionPerformed(evt);
             }
         });
 
+        jTextField5.setName("txtTelefonoAC"); // NOI18N
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
@@ -144,6 +155,9 @@ public class AgregarCliente extends javax.swing.JFrame {
                 .addGap(65, 65, 65))
         );
 
+        jTextField1.getAccessibleContext().setAccessibleName("");
+        jTextField4.getAccessibleContext().setAccessibleName("");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -166,6 +180,10 @@ public class AgregarCliente extends javax.swing.JFrame {
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
+
+    private void jTextField1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTextField1InputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1InputMethodTextChanged
 
     /**
      * @param args the command line arguments
