@@ -10,6 +10,8 @@ package com.mycompany.haar;
 public class HAAR {
 
     public static void main(String[] args) {
+        Cconexion objetoconexion = new Cconexion();
+        objetoconexion.establecerConexion();
                 // Ejecutar la aplicación
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
