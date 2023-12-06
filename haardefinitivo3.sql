@@ -1,0 +1,6 @@
+SELECT TOP (1000) [id_cliente]
+      ,[nombre_cliente]
+      ,[apellido_cliente]
+      ,[numero_telefono]
+      ,[numero_citas]
+  FROM [haar].[dbo].[clientes]
