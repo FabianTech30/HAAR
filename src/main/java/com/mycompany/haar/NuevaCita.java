@@ -69,11 +69,11 @@ public class NuevaCita extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         Cliente = new javax.swing.JComboBox<>();
         txtHora = new javax.swing.JTextField();
-        txtDia = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        txtDate = new com.toedter.calendar.JDateChooser();
 
         jButton2.setText("nueva cita");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -102,7 +102,7 @@ public class NuevaCita extends javax.swing.JFrame {
 
         jLabel3.setText("Hora:");
 
-        jLabel4.setText("Dia:");
+        jLabel4.setText("Fecha:");
 
         Cliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         Cliente.addActionListener(new java.awt.event.ActionListener() {
@@ -114,12 +114,6 @@ public class NuevaCita extends javax.swing.JFrame {
         txtHora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtHoraActionPerformed(evt);
-            }
-        });
-
-        txtDia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDiaActionPerformed(evt);
             }
         });
 
@@ -167,7 +161,7 @@ public class NuevaCita extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGap(0, 83, Short.MAX_VALUE)
                                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(115, 115, 115)
                                         .addComponent(btnGuardar)
@@ -175,17 +169,20 @@ public class NuevaCita extends javax.swing.JFrame {
                                     .addComponent(txtServicio)
                                     .addComponent(Cliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(164, 164, 164)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtDia, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(193, 193, 193))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(188, 188, 188)
+                                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(106, 106, 106)
+                                        .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addGap(151, 151, 151)))
-                .addGap(472, 472, 472))
+                        .addGap(206, 206, 206)))
+                .addGap(417, 417, 417))
             .addGroup(layout.createSequentialGroup()
-                .addGap(638, 638, 638)
+                .addGap(655, 655, 655)
                 .addComponent(jLabel6)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -202,17 +199,19 @@ public class NuevaCita extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -236,8 +235,7 @@ public class NuevaCita extends javax.swing.JFrame {
         this.dispose();  
      if (txtServicio.getText().trim().isEmpty() ||
         Cliente.getSelectedItem().toString().trim().isEmpty() ||
-        txtHora.getText().trim().isEmpty() ||
-        txtDia.getText().trim().isEmpty()) {
+        txtHora.getText().trim().isEmpty()) {
     JOptionPane.showMessageDialog(null, "El campo no puede ser vacío", "Error", JOptionPane.ERROR_MESSAGE);
     btnGuardar.setEnabled(false);
 }
@@ -264,7 +262,7 @@ public class NuevaCita extends javax.swing.JFrame {
             String servicio = txtServicio.getText();
             String cliente = Cliente.getSelectedItem().toString();
             String hora = txtHora.getText();
-            String dia = txtDia.getText();
+            
 
             // Preparar la consulta SQL
             String sql = "INSERT INTO citas (numero_cita, servicio, id_cliente, hora_cita, dia_cita) VALUES (?, ?, ?, ?, ?)";
@@ -307,16 +305,12 @@ public class NuevaCita extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ClienteActionPerformed
 
-    private void txtDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDiaActionPerformed
-
           
     private void limpiarCampos() {
         txtServicio.setText("");
         Cliente.setSelectedIndex(0);
         txtHora.setText("");
-        txtDia.setText("");
+        
 
     
     }
@@ -365,7 +359,7 @@ public class NuevaCita extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField txtDia;
+    private com.toedter.calendar.JDateChooser txtDate;
     private javax.swing.JTextField txtHora;
     private javax.swing.JTextField txtServicio;
     // End of variables declaration//GEN-END:variables
