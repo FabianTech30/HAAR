@@ -95,7 +95,6 @@ public class Clientes extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(51, 51, 51));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\fabyb\\OneDrive\\Escritorio\\imagenes\\iconAgregarCliente1.png")); // NOI18N
         jButton2.setText("AGREGAR CLIENTE");
         jButton2.setName("btnAgregarClienteClientes"); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -107,7 +106,6 @@ public class Clientes extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(51, 51, 51));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\fabyb\\OneDrive\\Escritorio\\imagenes\\iconVolver1.png")); // NOI18N
         jButton1.setText("VOLVER");
         jButton1.setName("btnVolverClientes"); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {

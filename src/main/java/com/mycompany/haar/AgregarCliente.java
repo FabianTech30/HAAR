@@ -79,7 +79,6 @@ public class AgregarCliente extends javax.swing.JFrame {
         btnAgregarCliente.setBackground(new java.awt.Color(51, 51, 51));
         btnAgregarCliente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAgregarCliente.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregarCliente.setIcon(new javax.swing.ImageIcon("C:\\Users\\fabyb\\OneDrive\\Escritorio\\imagenes\\iconAgregarCliente1.png")); // NOI18N
         btnAgregarCliente.setText("AGENDAR CLIENTE");
         btnAgregarCliente.setName("btnAgregarCitaAC"); // NOI18N
         btnAgregarCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -91,7 +90,6 @@ public class AgregarCliente extends javax.swing.JFrame {
         btnVolver.setBackground(new java.awt.Color(51, 51, 51));
         btnVolver.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnVolver.setForeground(new java.awt.Color(255, 255, 255));
-        btnVolver.setIcon(new javax.swing.ImageIcon("C:\\Users\\fabyb\\OneDrive\\Escritorio\\imagenes\\iconVolver1.png")); // NOI18N
         btnVolver.setText("VOLVER");
         btnVolver.setName("btnVolverAC"); // NOI18N
         btnVolver.addActionListener(new java.awt.event.ActionListener() {

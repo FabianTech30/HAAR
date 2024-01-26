@@ -126,7 +126,6 @@ public class NuevaCita extends javax.swing.JFrame {
         btnGuardar.setBackground(new java.awt.Color(51, 51, 51));
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
-        btnGuardar.setIcon(new javax.swing.ImageIcon("C:\\Users\\fabyb\\OneDrive\\Escritorio\\imagenes\\iconAceptar.png")); // NOI18N
         btnGuardar.setText("ACEPTAR Y GUARDAR");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,7 +136,6 @@ public class NuevaCita extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(51, 51, 51));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\fabyb\\OneDrive\\Escritorio\\imagenes\\iconVolver1.png")); // NOI18N
         jButton1.setText("VOLVER");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,7 +143,7 @@ public class NuevaCita extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("dia/mes/anio");
+        jLabel6.setText("dia/mes/año");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(102, 102, 102));
