@@ -201,7 +201,7 @@ public class Login extends javax.swing.JFrame {
                     
                     if((txtUsuario.getText().trim()).isEmpty() ||(txtUsuario.getText().trim()).isBlank()){
             JOptionPane.showMessageDialog(null, "El campo no puede ser vacio","Error",JOptionPane.ERROR_MESSAGE);
-            btnIngresar1.setEnabled(false);
+            btnIngresar1.setEnabled(false); 
         }
         else{
             Menu a = new Menu();
