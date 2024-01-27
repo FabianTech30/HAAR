@@ -67,7 +67,6 @@ public class Cobro extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(51, 51, 51));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\fabyb\\OneDrive\\Escritorio\\imagenes\\iconVolver1.png")); // NOI18N
         jButton1.setText("VOLVER");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,7 +77,6 @@ public class Cobro extends javax.swing.JFrame {
         btnCobro1.setBackground(new java.awt.Color(51, 51, 51));
         btnCobro1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCobro1.setForeground(new java.awt.Color(255, 255, 255));
-        btnCobro1.setIcon(new javax.swing.ImageIcon("C:\\Users\\fabyb\\OneDrive\\Escritorio\\imagenes\\iconCobrar4.png")); // NOI18N
         btnCobro1.setText("COBRAR");
         btnCobro1.setName("btnCobrar1"); // NOI18N
         btnCobro1.addActionListener(new java.awt.event.ActionListener() {
@@ -100,13 +98,10 @@ public class Cobro extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("Cobro");
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\fabyb\\OneDrive\\Escritorio\\imagenes\\iconTIposdecortes.png")); // NOI18N
         jLabel5.setText("Corte Sencillo = 50$");
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\fabyb\\OneDrive\\Escritorio\\imagenes\\iconTiposCortes2.png")); // NOI18N
         jLabel6.setText("Corte Normal = 75$");
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\fabyb\\OneDrive\\Escritorio\\imagenes\\iconTiposCortes3.png")); // NOI18N
         jLabel7.setText("Corte Especial = 100$");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
