@@ -39,9 +39,12 @@ public class NuevaCita extends javax.swing.JFrame {
         // Limpiar el modelo actual del combo
         modeloComboClientes.removeAllElements();
 
-        // Llenar el modelo con los IDs de los clientes
+        // Llenar el modelo con los IDs y nombres de los clientes
         while (rs.next()) {
-            modeloComboClientes.addElement(rs.getString("nombre_cliente"));
+            String idCliente = rs.getString("id_cliente");
+            String nombreCliente = rs.getString("nombre_cliente");
+            String clienteCompleto = idCliente + " - " + nombreCliente;
+            modeloComboClientes.addElement(clienteCompleto);
         }
 
         // Cerrar la conexión
@@ -230,17 +233,17 @@ public class NuevaCita extends javax.swing.JFrame {
     }//GEN-LAST:event_txtServicioActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        Menu a = new Menu();
-        a.setVisible(true);
-        this.dispose();  
-     if (txtServicio.getText().trim().isEmpty() ||
+      Menu a = new Menu();
+    a.setVisible(true);
+    this.dispose();  
+    if (txtServicio.getText().trim().isEmpty() ||
         Cliente.getSelectedItem().toString().trim().isEmpty() ||
-        txtHora.getText().trim().isEmpty()) {
-    JOptionPane.showMessageDialog(null, "El campo no puede ser vacío", "Error", JOptionPane.ERROR_MESSAGE);
-    btnGuardar.setEnabled(false);
-}
-     else{
-          try {
+        txtHora.getText().trim().isEmpty() ||
+        txtDate.getDate() == null) {
+        JOptionPane.showMessageDialog(null, "Todos los campos deben estar completos", "Error", JOptionPane.ERROR_MESSAGE);
+        btnGuardar.setEnabled(false);
+    } else {
+        try {
             // Conectar a la base de datos
             Cconexion conexion = new Cconexion();
             Connection con = conexion.establecerConexion();
@@ -260,18 +263,24 @@ public class NuevaCita extends javax.swing.JFrame {
 
             // Obtener los datos de la GUI
             String servicio = txtServicio.getText();
-            String cliente = Cliente.getSelectedItem().toString();
-            String hora = txtHora.getText();
+            String clienteCompleto = Cliente.getSelectedItem().toString();
             
+            // Dividir el clienteCompleto para obtener el id_cliente
+            String[] partesCliente = clienteCompleto.split(" - ");
+            String idCliente = partesCliente[0];
+            
+            String hora = txtHora.getText();
+            java.util.Date fecha = txtDate.getDate();
+            java.sql.Date dia = new java.sql.Date(fecha.getTime());
 
             // Preparar la consulta SQL
             String sql = "INSERT INTO citas (numero_cita, servicio, id_cliente, hora_cita, dia_cita) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, nuevoNumero);
             ps.setString(2, servicio);
-            ps.setString(3, cliente);
+            ps.setString(3, idCliente); // Usar el id_cliente obtenido
             ps.setString(4, hora);
-            ps.setString(5, dia);
+            ps.setDate(5, dia);
 
             // Ejecutar la consulta
             int result = ps.executeUpdate();
@@ -287,7 +296,7 @@ public class NuevaCita extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error de base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-     }
+    }
     
     }//GEN-LAST:event_btnGuardarActionPerformed
 

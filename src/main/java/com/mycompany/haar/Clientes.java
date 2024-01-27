@@ -214,7 +214,7 @@ public class Clientes extends javax.swing.JFrame {
     if (filaSeleccionada == -1) {
         JOptionPane.showMessageDialog(this, "Selecciona un cliente para eliminar");
     } else {
-        int idCliente = (int) modeloTabla.getValueAt(filaSeleccionada, 0);
+        int idCliente = (int) modeloTabla.getValueAt(filaSeleccionada, 1); // Usar índice 1 en lugar de 0
         
         int confirmacion = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar este cliente?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
@@ -240,11 +240,19 @@ public class Clientes extends javax.swing.JFrame {
     }
     }
     private void eliminarCliente(int idCliente) {
-    try {
+try {
         Connection con = conexion.establecerConexion();
         PreparedStatement ps = con.prepareStatement("DELETE FROM clientes WHERE id_cliente = ?");
         ps.setInt(1, idCliente);
-        ps.executeUpdate();
+        
+        int filasAfectadas = ps.executeUpdate();
+        
+        if (filasAfectadas > 0) {
+            JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el cliente");
+        }
+        
         con.close();
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(null, e.toString());
