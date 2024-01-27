@@ -34,49 +34,60 @@ public class Clientes extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jEliminar = new javax.swing.JButton();
+        jEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(1280, 720));
         setSize(new java.awt.Dimension(1280, 720));
 
-        tblclientes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tblclientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tblclientes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblclientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "ID", "Nombre", "Apellido", "Telefono", "Num Cortes"
+                "ID", "Nombre", "Telefono"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
+        tblclientes.setAlignmentX(0.0F);
+        tblclientes.setAlignmentY(0.0F);
+        tblclientes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tblclientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(tblclientes);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -118,6 +129,30 @@ public class Clientes extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("Clientes");
 
+        jEliminar.setBackground(new java.awt.Color(51, 51, 51));
+        jEliminar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        jEliminar.setIcon(new javax.swing.ImageIcon("C:\\Users\\fabyb\\OneDrive\\Escritorio\\imagenes\\iconAgregarCliente1.png")); // NOI18N
+        jEliminar.setText("ELIMINAR");
+        jEliminar.setName("btnAgregarClienteClientes"); // NOI18N
+        jEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jEliminarActionPerformed(evt);
+            }
+        });
+
+        jEditar.setBackground(new java.awt.Color(51, 51, 51));
+        jEditar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jEditar.setForeground(new java.awt.Color(255, 255, 255));
+        jEditar.setIcon(new javax.swing.ImageIcon("C:\\Users\\fabyb\\OneDrive\\Escritorio\\imagenes\\iconAgregarCliente1.png")); // NOI18N
+        jEditar.setText("EDITAR");
+        jEditar.setName("btnAgregarClienteClientes"); // NOI18N
+        jEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jEditarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,7 +165,11 @@ public class Clientes extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(148, 148, 148)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(303, 303, 303)
+                        .addGap(18, 18, 18)
+                        .addComponent(jEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(358, 358, 358)
@@ -149,7 +188,9 @@ public class Clientes extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19))
         );
 
@@ -167,6 +208,51 @@ public class Clientes extends javax.swing.JFrame {
         a.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEliminarActionPerformed
+        // Eliminar cliente
+    int filaSeleccionada = tblclientes.getSelectedRow();
+
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Selecciona un cliente para eliminar");
+    } else {
+        int idCliente = (int) modeloTabla.getValueAt(filaSeleccionada, 0);
+        
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar este cliente?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            eliminarCliente(idCliente);
+            cargarTabla();
+        }
+    }
+    }//GEN-LAST:event_jEliminarActionPerformed
+
+    private void jEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditarActionPerformed
+        // Editar cliente
+    int filaSeleccionada = tblclientes.getSelectedRow();
+
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Selecciona un cliente para editar");
+    } else {
+        int idCliente = (int) modeloTabla.getValueAt(filaSeleccionada, 0);
+        // Aquí puedes abrir una ventana para editar el cliente, enviando el ID como parámetro
+        // por ejemplo:
+        // EditarCliente editarCliente = new EditarCliente(idCliente);
+        // editarCliente.setVisible(true);
+    }
+    }
+    private void eliminarCliente(int idCliente) {
+    try {
+        Connection con = conexion.establecerConexion();
+        PreparedStatement ps = con.prepareStatement("DELETE FROM clientes WHERE id_cliente = ?");
+        ps.setInt(1, idCliente);
+        ps.executeUpdate();
+        con.close();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, e.toString());
+    }
+
+    }//GEN-LAST:event_jEditarActionPerformed
  private void cargarTabla() {
         modeloTabla.setRowCount(0);
         PreparedStatement ps;
@@ -176,7 +262,7 @@ public class Clientes extends javax.swing.JFrame {
 
         try {
             Connection con = conexion.establecerConexion();
-            ps = con.prepareStatement("SELECT id_cliente, nombre_cliente, apellido_cliente, numero_telefono FROM clientes");
+            ps = con.prepareStatement("SELECT id_cliente, nombre_cliente, numero_telefono FROM clientes");
             rs = ps.executeQuery();
             rsmd = rs.getMetaData();
             columnas = rsmd.getColumnCount();
@@ -236,6 +322,8 @@ public class Clientes extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jEditar;
+    private javax.swing.JButton jEliminar;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

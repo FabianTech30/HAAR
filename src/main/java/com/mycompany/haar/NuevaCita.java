@@ -32,7 +32,7 @@ public class NuevaCita extends javax.swing.JFrame {
         Connection con = conexion.establecerConexion();
 
         // Consulta para obtener los últimos 10 clientes agregados
-        String sql = "SELECT TOP 10 id_cliente FROM clientes ORDER BY id_cliente DESC";
+        String sql = "SELECT TOP 100 id_cliente, nombre_cliente FROM clientes ORDER BY id_cliente, nombre_cliente DESC";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
@@ -41,7 +41,7 @@ public class NuevaCita extends javax.swing.JFrame {
 
         // Llenar el modelo con los IDs de los clientes
         while (rs.next()) {
-            modeloComboClientes.addElement(rs.getString("id_cliente"));
+            modeloComboClientes.addElement(rs.getString("nombre_cliente"));
         }
 
         // Cerrar la conexión
