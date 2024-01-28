@@ -190,14 +190,16 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void btnIngresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresar1ActionPerformed
+       if ((txtUsuario.getText().trim()).isEmpty() || (txtUsuario.getText().trim()).isBlank()) {
+    JOptionPane.showMessageDialog(null, "El campo no puede ser vacío", "Error", JOptionPane.ERROR_MESSAGE);
+    btnIngresar1.setEnabled(false);
+} else {
+    // Ahora, verifica las credenciales solo si el campo de usuario no está en blanco
     String Usuario = "Fabian";
-    String Contraseña = "1234";
+    String Contraseña = "1234"; 
 
-    String User;
-    String Pass;
-
-    User = txtUsuario.getText();
-    Pass = txtContraseña.getText();
+    String User = txtUsuario.getText();
+    String Pass = txtContraseña.getText();
 
     if (User.equals(Usuario) && Pass.equals(Contraseña)) {
         Menu a = new Menu();
@@ -206,16 +208,7 @@ public class Login extends javax.swing.JFrame {
     } else {
         JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
     }
-
-    if ((txtUsuario.getText().trim()).isEmpty() || (txtUsuario.getText().trim()).isBlank()) {
-        JOptionPane.showMessageDialog(null, "El campo no puede ser vacío", "Error", JOptionPane.ERROR_MESSAGE);
-        btnIngresar1.setEnabled(false);
-    } else {
-        Menu a = new Menu();
-        a.setVisible(true);
-        this.dispose();
-        btnIngresar1.setEnabled(true);
-    }                          
+       }
     }//GEN-LAST:event_btnIngresar1ActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
