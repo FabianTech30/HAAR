@@ -10,8 +10,12 @@ import javax.swing.JOptionPane;
 
 public class NuevaCita extends javax.swing.JFrame {
     private DefaultComboBoxModel<String> modeloComboClientes;
-     private Menu menu;
+    private Menu menu;
+     
     public NuevaCita() {
+        setTitle("Nueva Cita");
+        setLocation(25,0);
+        setSize(1280,720);
         initComponents();
         modeloComboClientes = new DefaultComboBoxModel<>();
         Cliente.setModel(modeloComboClientes);
@@ -88,6 +92,9 @@ public class NuevaCita extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMaximumSize(new java.awt.Dimension(1280, 720));
+        setMinimumSize(new java.awt.Dimension(1280, 720));
+        setPreferredSize(new java.awt.Dimension(1280, 720));
         setResizable(false);
         setSize(new java.awt.Dimension(1280, 720));
 

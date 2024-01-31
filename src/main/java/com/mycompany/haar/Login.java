@@ -10,13 +10,17 @@ import javax.swing.*;
  * @author Rayo
  */
 public class Login extends javax.swing.JFrame {
-
     Menu menu;
     JLabel Imagen;
     public Login() {
+        setLocation(100,200);
+        setTitle("Login");
+        setSize(1280,720);
         initComponents();
         menu = new Menu();
+        
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

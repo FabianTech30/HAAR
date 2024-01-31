@@ -14,6 +14,9 @@ public class AgregarCliente extends javax.swing.JFrame {
 
     public AgregarCliente() {
         // Inicializa la conexión en el constructor
+        setSize(1280,720);
+        setLocation(25,0);
+        setTitle("Agregar Cliente");
         this.conexion = new Cconexion();
         initComponents();
     }

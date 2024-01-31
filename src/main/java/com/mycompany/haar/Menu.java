@@ -17,6 +17,9 @@ public class Menu extends javax.swing.JFrame {
         
     
     public Menu() {
+        setSize(1280,720);
+        setLocation(25,0);
+        setTitle("Menu");
         initComponents();
         modelo = (DefaultTableModel) tblCitas.getModel();
         cargarCitas();
