@@ -184,6 +184,39 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< HEAD
+=======
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+     
+    }//GEN-LAST:event_txtUsuarioActionPerformed
+
+    private void btnIngresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresar1ActionPerformed
+       if ((txtUsuario.getText().trim()).isEmpty() || (txtUsuario.getText().trim()).isBlank()) {
+    JOptionPane.showMessageDialog(null, "El campo no puede ser vacío", "Error", JOptionPane.ERROR_MESSAGE);
+    btnIngresar1.setEnabled(false);
+} else {
+    // Ahora, verifica las credenciales solo si el campo de usuario no está en blanco
+    String Usuario = "Fabian";
+    String Contraseña = "1234"; 
+
+    String User = txtUsuario.getText();
+    String Pass = txtContraseña.getText();
+
+    if (User.equals(Usuario) && Pass.equals(Contraseña)) {
+        Menu a = new Menu();
+        a.setVisible(true);
+        dispose();
+    } else {
+        JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+       }
+    }//GEN-LAST:event_btnIngresar1ActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+      System.exit(0);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+>>>>>>> 84a37ff6d1771ce990dfe24bc80977272ddb3fd5
     private void txtContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseñaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtContraseñaActionPerformed
