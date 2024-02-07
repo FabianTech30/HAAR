@@ -1,8 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package com.mycompany.haar;
+
+import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JOptionPane;
 
@@ -10,6 +20,7 @@ import javax.swing.JOptionPane;
 
 public class Cobro extends javax.swing.JFrame {
 
+    
 
     public Cobro() {
         setTitle("Cobro");
@@ -127,6 +138,18 @@ public class Cobro extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addComponent(jLabel8)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel9))
+                        .addGap(278, 278, 278))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -155,19 +178,7 @@ public class Cobro extends javax.swing.JFrame {
                                             .addComponent(jLabel4)
                                             .addComponent(jLabel2))
                                         .addGap(239, 239, 239)))))
-                        .addGap(23, 23, 23))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addComponent(jLabel8)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel9))
-                .addGap(278, 278, 278))
+                        .addGap(416, 416, 416))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,30 +237,54 @@ public class Cobro extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnCobro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobro1ActionPerformed
-
-     if (ComboBoxTipoCorte.getSelectedItem().toString().trim().isEmpty() ||
-            ComboBoxServicioExtra.getSelectedItem().toString().trim().isEmpty() ||
-            txtMonto.getText().trim().isEmpty()) {
+        if (ComboBoxTipoCorte.getSelectedItem().toString().trim().isEmpty()
+                || ComboBoxServicioExtra.getSelectedItem().toString().trim().isEmpty() || txtMonto.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ningún campo puede ser vacío", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            // Obtener los valores seleccionados
             String tipoCorte = ComboBoxTipoCorte.getSelectedItem().toString();
             String servicioExtra = ComboBoxServicioExtra.getSelectedItem().toString();
             double montoAdicional = Double.parseDouble(txtMonto.getText());
-
-            // Calcular el total
             double total = calcularTotal(tipoCorte, servicioExtra, montoAdicional);
 
-            // Mostrar el total
-            JOptionPane.showMessageDialog(null, "Total a pagar: $" + total, "Total de Cobro", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                // Generar un nombre de archivo único con la fecha y hora actual
+                String timeStamp;
+                timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date(ERROR, WIDTH, WIDTH));
+                String fileName = "TotalCobro_" + timeStamp + ".pdf";
 
-            // Redirigir a la ventana de Menú
-            Menu menu = new Menu();
-            menu.setVisible(true);
-            this.dispose();
+                // Ruta completa del archivo
+                String filePath = "C:\\Users\\fabyb\\OneDrive\\Escritorio\\HAAR\\cobros\\" + fileName;
+
+                // Crear directorios si no existen
+                File file = new File(filePath);
+                file.getParentFile().mkdirs();
+
+                // Crear el documento PDF
+                PdfWriter writer = new PdfWriter(filePath);
+                PdfDocument pdf = new PdfDocument(writer);
+                Document document = new Document(pdf, PageSize.A4);
+
+                // Agregar contenido al documento
+                PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
+                Paragraph paragraph = new Paragraph("Total a pagar: $" + total).setFont(font);
+                document.add(paragraph);
+
+                // Cerrar el documento
+                document.close();
+
+                // Mostrar mensaje de éxito
+                JOptionPane.showMessageDialog(null, "Documento PDF creado con éxito: " + fileName, "Total de Cobro",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                // Redirigir a la ventana de Menú
+                Menu menu = new Menu();
+                menu.setVisible(true);
+                this.dispose();
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Error al crear el documento PDF: " + e.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
-
-    
 
     }//GEN-LAST:event_btnCobro1ActionPerformed
 
