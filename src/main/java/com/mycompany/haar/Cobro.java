@@ -2,7 +2,6 @@
 package com.mycompany.haar;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +18,10 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.property.TextAlignment;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.Random;
 import javax.swing.JOptionPane;
 
 
@@ -32,79 +34,84 @@ public class Cobro extends javax.swing.JFrame {
     private Cconexion conexion; // Utilizamos la clase Cconexion para la conexión
  
     public Cobro() {
-    setTitle("Cobro");
-    setLocation(25,0);
-    setSize(1280,720);
-    initComponents();
-    ComboBoxTipoCorte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Corte sencillo", "Normal", "Especial"}));
-    ComboBoxServicioExtra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Sí", "No"}));
-    
-    // Inicializar el modelo del ComboBoxCliente
-    modeloComboClientes = new DefaultComboBoxModel<>();
-    ComboBoxCliente.setModel(modeloComboClientes);
-    
-    // Establecer la conexión en el constructor
-    conexion = new Cconexion();
-    establecerConexion();
+      setTitle("Cobro");
+        setLocation(25, 0);
+        setSize(1280, 720);
+        initComponents();
+        ComboBoxTipoCorte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Corte sencillo", "Normal", "Especial"}));
+        ComboBoxServicioExtra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Sí", "No"}));
+        modeloComboClientes = new DefaultComboBoxModel<>();
+        ComboBoxCliente.setModel(modeloComboClientes);
+        conexion = new Cconexion();
+        establecerConexion();
     }
     private void establecerConexion() {
         try {
-        Cconexion conexion = new Cconexion();
-        Connection con = conexion.establecerConexion();
-
-        // Modificar la consulta SQL para obtener el nombre y apellido del cliente
-        String sql = "SELECT nombre_cliente, apellido_cliente FROM clientes ORDER BY nombre_cliente, apellido_cliente";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-
-        // Limpiar el modelo actual del combo
-        modeloComboClientes.removeAllElements();
-
-        // Llenar el modelo con los nombres y apellidos de los clientes
-        while (rs.next()) {
-            String nombreCliente = rs.getString("nombre_cliente");
-            String apellidoCliente = rs.getString("apellido_cliente");
-            String clienteCompleto = nombreCliente + " " + apellidoCliente; // Modificar el formato si es necesario
-            modeloComboClientes.addElement(clienteCompleto);
+            Connection con = conexion.establecerConexion();
+            String sql = "SELECT nombre_cliente, apellido_cliente FROM clientes ORDER BY nombre_cliente, apellido_cliente";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            modeloComboClientes.removeAllElements();
+            while (rs.next()) {
+                String nombreCliente = rs.getString("nombre_cliente");
+                String apellidoCliente = rs.getString("apellido_cliente");
+                String clienteCompleto = nombreCliente + " " + apellidoCliente;
+                modeloComboClientes.addElement(clienteCompleto);
+            }
+            con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al cargar clientes: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        // Cerrar la conexión
+    }
+    private void insertarRegistroCobroEnDB(String clienteSeleccionado, Date fechaCobro, String tipoCorte, String servicioExtra, double montoAdicional, double subtotal, double iva, double total) {
+    try {
+        Connection con = conexion.establecerConexion();
+        String sql = "INSERT INTO Cobros (Cliente, FechaCobro, TipoCorte, ServicioExtra, MontoAdicional, Subtotal, IVA, Total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, clienteSeleccionado);
+        ps.setTimestamp(2, new java.sql.Timestamp(fechaCobro.getTime()));
+        ps.setString(3, tipoCorte);
+        ps.setString(4, servicioExtra);
+        ps.setDouble(5, montoAdicional);
+        ps.setDouble(6, subtotal);
+        ps.setDouble(7, iva);
+        ps.setDouble(8, total);
+        ps.executeUpdate();
         con.close();
     } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al cargar clientes: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Error al insertar el registro de cobro en la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-    }
+}
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         ComboBoxTipoCorte = new javax.swing.JComboBox<>();
         ComboBoxServicioExtra = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         btnCobro1 = new javax.swing.JButton();
         txtMonto = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         ComboBoxCliente = new javax.swing.JComboBox<>();
-        jLabel12 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(153, 255, 153));
+        setBounds(new java.awt.Rectangle(25, 0, 1280, 720));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setForeground(java.awt.Color.magenta);
-        setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(1280, 720));
-        setPreferredSize(new java.awt.Dimension(1280, 720));
         setSize(new java.awt.Dimension(1280, 720));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        ComboBoxTipoCorte.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         ComboBoxTipoCorte.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ComboBoxTipoCorte.setName("ComboBoxTipoCorte"); // NOI18N
         ComboBoxTipoCorte.addActionListener(new java.awt.event.ActionListener() {
@@ -112,7 +119,9 @@ public class Cobro extends javax.swing.JFrame {
                 ComboBoxTipoCorteActionPerformed(evt);
             }
         });
+        getContentPane().add(ComboBoxTipoCorte, new org.netbeans.lib.awtextra.AbsoluteConstraints(531, 379, 259, 47));
 
+        ComboBoxServicioExtra.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         ComboBoxServicioExtra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ComboBoxServicioExtra.setName("ComboBoxServicioExtra"); // NOI18N
         ComboBoxServicioExtra.addActionListener(new java.awt.event.ActionListener() {
@@ -120,13 +129,19 @@ public class Cobro extends javax.swing.JFrame {
                 ComboBoxServicioExtraActionPerformed(evt);
             }
         });
+        getContentPane().add(ComboBoxServicioExtra, new org.netbeans.lib.awtextra.AbsoluteConstraints(718, 493, -1, 26));
 
-        jLabel1.setText("Servicio Extra");
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel12.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jLabel12.setText("Cliente");
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 224, 70, -1));
 
+        jLabel2.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         jLabel2.setText("Tipo de corte");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(619, 338, -1, 20));
 
         jButton1.setBackground(new java.awt.Color(51, 51, 51));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("VOLVER");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -134,9 +149,10 @@ public class Cobro extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(399, 555, 121, 39));
 
-        btnCobro1.setBackground(new java.awt.Color(51, 51, 51));
-        btnCobro1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCobro1.setBackground(new java.awt.Color(102, 102, 0));
+        btnCobro1.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         btnCobro1.setForeground(new java.awt.Color(255, 255, 255));
         btnCobro1.setText("COBRAR");
         btnCobro1.setName("btnCobrar1"); // NOI18N
@@ -145,36 +161,19 @@ public class Cobro extends javax.swing.JFrame {
                 btnCobro1ActionPerformed(evt);
             }
         });
+        getContentPane().add(btnCobro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(823, 555, 121, 39));
 
+        txtMonto.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         txtMonto.setName("txtMonto"); // NOI18N
         txtMonto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMontoActionPerformed(evt);
             }
         });
+        getContentPane().add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(563, 493, 75, 30));
 
-        jLabel3.setText("Monto Adicional");
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel4.setText("Cobro");
-
-        jLabel5.setText("Corte Sencillo = 50$");
-
-        jLabel6.setText("Corte Normal = 75$");
-
-        jLabel7.setText("Corte Especial = 100$");
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel8.setText("Costos:");
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel9.setText("Extras:");
-
-        jLabel10.setText("Barba = 50$");
-
-        jLabel11.setText("Peinado Mujer = 120$");
-
+        ComboBoxCliente.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        ComboBoxCliente.setMaximumRowCount(40);
         ComboBoxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ComboBoxCliente.setName("ComboBoxTipoCorte"); // NOI18N
         ComboBoxCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -182,118 +181,43 @@ public class Cobro extends javax.swing.JFrame {
                 ComboBoxClienteActionPerformed(evt);
             }
         });
+        getContentPane().add(ComboBoxCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(531, 265, 259, 47));
 
-        jLabel12.setText("Cliente");
+        jPanel1.setBackground(new java.awt.Color(0, 0, 27));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(281, 281, 281)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(303, 303, 303)
-                                        .addComponent(btnCobro1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(138, 138, 138))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel12)
-                                            .addComponent(jLabel4))
-                                        .addGap(377, 377, 377))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(226, 226, 226)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(ComboBoxTipoCorte, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ComboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(6, 6, 6)
-                                                .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(62, 62, 62)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(ComboBoxServicioExtra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))))
-                                .addGap(292, 292, 292))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addComponent(jLabel8)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 592, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel9))))
-                .addGap(182, 182, 182))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(160, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(57, 57, 57)
-                        .addComponent(jLabel10)
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabel11))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(57, 57, 57))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(26, 26, 26)))
-                        .addComponent(jLabel5)
-                        .addGap(9, 9, 9)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(64, 64, 64)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(ComboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(ComboBoxTipoCorte, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(ComboBoxServicioExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnCobro1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(96, 96, 96))
-        );
+        jLabel3.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jLabel3.setText("Monto Adicional");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 470, 130, 30));
+
+        jLabel1.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jLabel1.setText("Servicio Extra");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 470, -1, -1));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 4, true));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setFont(new java.awt.Font("Impact", 1, 36)); // NOI18N
+        jLabel4.setText("COBRO");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 110, 110, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 690, 630));
+
+        jTextArea1.setBackground(new java.awt.Color(0, 0, 27));
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
+        jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextArea1.setRows(5);
+        jTextArea1.setText("Corte Sencillo = 50$\nCorte Normal = 75$\nCorte Especial = 100$\nServicio Extra = 20$\n");
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 390, 170, 110));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1290, 740));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void ComboBoxTipoCorteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxTipoCorteActionPerformed
@@ -308,62 +232,79 @@ public class Cobro extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnCobro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobro1ActionPerformed
-        if (ComboBoxTipoCorte.getSelectedItem().toString().trim().isEmpty()
-            || ComboBoxServicioExtra.getSelectedItem().toString().trim().isEmpty() || txtMonto.getText().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Ningún campo puede ser vacío", "Error", JOptionPane.ERROR_MESSAGE);
-    } else {
-        String tipoCorte = ComboBoxTipoCorte.getSelectedItem().toString();
-        String servicioExtra = ComboBoxServicioExtra.getSelectedItem().toString();
-        double montoAdicional = Double.parseDouble(txtMonto.getText());
-        double total = calcularTotal(tipoCorte, servicioExtra, montoAdicional);
-        double subtotal = total / 1.16; // Calcula el subtotal (sin IVA)
-        double iva = total - subtotal; // Calcula el IVA
-        String clienteSeleccionado = ComboBoxCliente.getSelectedItem().toString(); // Obtener el cliente seleccionado
+       if (ComboBoxTipoCorte.getSelectedItem().toString().trim().isEmpty()
+                || ComboBoxServicioExtra.getSelectedItem().toString().trim().isEmpty() || txtMonto.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ningún campo puede ser vacío", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String tipoCorte = ComboBoxTipoCorte.getSelectedItem().toString();
+            String servicioExtra = ComboBoxServicioExtra.getSelectedItem().toString();
+            double montoAdicional = Double.parseDouble(txtMonto.getText());
+            double total = calcularTotal(tipoCorte, servicioExtra, montoAdicional);
+            double subtotal = total / 1.16;
+            double iva = total - subtotal;
+            String clienteSeleccionado = ComboBoxCliente.getSelectedItem().toString();
 
-        try {
-            // Generar un nombre de archivo único con la fecha y hora actual
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String fileName = "TotalCobro_" + timeStamp + ".pdf";
+            try {
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                String fileName = "TotalCobro_" + timeStamp + ".pdf";
+                String filePath = "C:\\Users\\fabyb\\OneDrive\\Escritorio\\HAAR\\cobros\\" + fileName;
+                File file = new File(filePath);
+                file.getParentFile().mkdirs();
+                PdfWriter writer = new PdfWriter(filePath);
+                PdfDocument pdf = new PdfDocument(writer);
+                Document document = new Document(pdf, PageSize.A4);
+                PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA);
+                document.add(new Paragraph("HAAR \nRecibo de Cobro").setFont(font).setFontSize(20).setBold().setUnderline().setTextAlignment(TextAlignment.CENTER).setMarginBottom(20));
+                document.add(new Paragraph("Fecha: " + timeStamp).setFont(font).setFontSize(12).setTextAlignment(TextAlignment.RIGHT).setMarginBottom(10));
+                document.add(new Paragraph("Cliente: " + clienteSeleccionado).setFont(font).setFontSize(12).setMarginBottom(10));
+                document.add(new Paragraph("Tipo de Corte: " + tipoCorte).setFont(font).setFontSize(12));
+                document.add(new Paragraph("Servicio Extra: " + servicioExtra).setFont(font).setFontSize(12));
+                document.add(new Paragraph("Monto Adicional: $" + montoAdicional).setFont(font).setFontSize(12));
+                document.add(new Paragraph("Subtotal: $" + String.format("%.2f", subtotal)).setFont(font).setFontSize(12));
+                document.add(new Paragraph("IVA (16%): $" + String.format("%.2f", iva)).setFont(font).setFontSize(12));
+                document.add(new Paragraph("Total a Pagar: $" + String.format("%.2f", total)).setFont(font).setFontSize(12).setBold().setMarginBottom(20));
+                document.close();
+                JOptionPane.showMessageDialog(null, "Documento PDF creado con éxito: " + fileName, "Total de Cobro", JOptionPane.INFORMATION_MESSAGE);
+                insertarRegistroCobro(Files.readAllBytes(Paths.get(filePath)), fileName);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Error al crear el documento PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+       insertarRegistroCobroEnDB(clienteSeleccionado, new Date(), tipoCorte, servicioExtra, montoAdicional, subtotal, iva, total);
 
-            // Ruta completa del archivo
-            String filePath = "C:\\Users\\fabyb\\OneDrive\\Escritorio\\HAAR\\cobros\\" + fileName;
-
-            // Crear directorios si no existen
-            File file = new File(filePath);
-            file.getParentFile().mkdirs();
-
-            // Crear el documento PDF
-            PdfWriter writer = new PdfWriter(filePath);
-            PdfDocument pdf = new PdfDocument(writer);
-            Document document = new Document(pdf, PageSize.A4);
-
-            // Agregar contenido al documento
-            PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA);
-            document.add(new Paragraph("HAAR \nRecibo de Cobro").setFont(font).setFontSize(20).setBold().setUnderline().setTextAlignment(TextAlignment.CENTER).setMarginBottom(20));
-
-            // Agregar datos del cobro
-            document.add(new Paragraph("Fecha: " + timeStamp).setFont(font).setFontSize(12).setTextAlignment(TextAlignment.RIGHT).setMarginBottom(10));
-            document.add(new Paragraph("Cliente: " + clienteSeleccionado).setFont(font).setFontSize(12).setMarginBottom(10)); // Agregar nombre y apellido del cliente
-            document.add(new Paragraph("Tipo de Corte: " + tipoCorte).setFont(font).setFontSize(12));
-            document.add(new Paragraph("Servicio Extra: " + servicioExtra).setFont(font).setFontSize(12));
-            document.add(new Paragraph("Monto Adicional: $" + montoAdicional).setFont(font).setFontSize(12));
-            document.add(new Paragraph("Subtotal: $" + String.format("%.2f", subtotal)).setFont(font).setFontSize(12));
-            document.add(new Paragraph("IVA (16%): $" + String.format("%.2f", iva)).setFont(font).setFontSize(12));
-            document.add(new Paragraph("Total a Pagar: $" + String.format("%.2f", total)).setFont(font).setFontSize(12).setBold().setMarginBottom(20));
-
-            // Cerrar el documento
-            document.close();
-
-            // Mostrar mensaje de éxito
-            JOptionPane.showMessageDialog(null, "Documento PDF creado con éxito: " + fileName, "Total de Cobro",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-            // No redirigir automáticamente a la ventana de Menú
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al crear el documento PDF: " + e.getMessage(), "Error",
-                    JOptionPane.ERROR_MESSAGE);
         }
+}
+
+   private void insertarRegistroCobro(byte[] pdfData, String fileName) {
+    try {
+        Connection con = conexion.establecerConexion();
+
+        // Insertar el registro en la tabla 'cobro' sin especificar un valor para la columna 'id'
+        String sql = "INSERT INTO cobro (registro_pdf, nombre_archivo) VALUES (?, ?)";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setBytes(1, pdfData);
+        ps.setString(2, fileName); // Agregar el nombre del archivo
+        ps.executeUpdate();
+
+        con.close();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al insertar el registro en la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
+
+
+    }
+       private void actualizarRegistroPDF(String fileName) {
+        try {
+            Connection con = conexion.establecerConexion();
+            String sql = "UPDATE clientes SET registros_pdf = ? WHERE nombre_cliente = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, fileName);
+            ps.setString(2, ComboBoxCliente.getSelectedItem().toString());
+            ps.executeUpdate();
+            con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar el registro PDF en la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+       
     }//GEN-LAST:event_btnCobro1ActionPerformed
 
     private void txtMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMontoActionPerformed
@@ -380,8 +321,6 @@ public class Cobro extends javax.swing.JFrame {
 
 private double calcularTotal(String tipoCorte, String servicioExtra, double montoAdicional) {
         double precioBase = 0;
-
-        // Asignar precios base según el tipo de corte
         switch (tipoCorte) {
             case "Corte sencillo":
                 precioBase = 50;
@@ -393,15 +332,10 @@ private double calcularTotal(String tipoCorte, String servicioExtra, double mont
                 precioBase = 100;
                 break;
         }
-
-        // Aplicar cargo adicional si el servicio extra es "Sí"
         if (servicioExtra.equals("Sí")) {
-            precioBase += 20; // Puedes ajustar este valor según tus necesidades
+            precioBase += 20;
         }
-
-        // Sumar el monto adicional
         precioBase += montoAdicional;
-
         return precioBase;
     }
 
@@ -450,17 +384,14 @@ private double calcularTotal(String tipoCorte, String servicioExtra, double mont
     private javax.swing.JButton btnCobro1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField txtMonto;
     // End of variables declaration//GEN-END:variables
 
