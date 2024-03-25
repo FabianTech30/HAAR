@@ -9,6 +9,7 @@ import javax.swing.*;
 public class Login extends javax.swing.JFrame {
     Menu menu;
     JLabel Imagen;
+    private JPasswordField a;
     public Login() {
         setLocation(100,200);
         setTitle("Login");
@@ -38,13 +39,12 @@ public class Login extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         btnIngresar1 = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        txtContraseña = new javax.swing.JPasswordField();
+        txtContrasenia = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
         setBounds(new java.awt.Rectangle(1, 0, 1280, 720));
-        setMaximumSize(new java.awt.Dimension(1280, 720));
         setMinimumSize(new java.awt.Dimension(1280, 720));
         setName("frmLogin"); // NOI18N
         setResizable(false);
@@ -75,7 +75,7 @@ public class Login extends javax.swing.JFrame {
         jPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 68, 40));
 
         jLabel6.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
-        jLabel6.setText("Contraseña");
+        jLabel6.setText("Contrasenia");
         jPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, -1, -1));
 
         btnIngresar1.setBackground(new java.awt.Color(51, 51, 51));
@@ -104,13 +104,13 @@ public class Login extends javax.swing.JFrame {
         });
         jPanel.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 460, 155, 48));
 
-        txtContraseña.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
-        txtContraseña.addActionListener(new java.awt.event.ActionListener() {
+        txtContrasenia.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        txtContrasenia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtContraseñaActionPerformed(evt);
+                txtContraseniaActionPerformed(evt);
             }
         });
-        jPanel.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 400, 288, 34));
+        jPanel.add(txtContrasenia, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 400, 288, 34));
 
         jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\fabyb\\OneDrive\\Escritorio\\HAAR\\imagenes\\HAARLogo.png")); // NOI18N
         jPanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, 370, 250));
@@ -122,37 +122,42 @@ public class Login extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseñaActionPerformed
+/*
+    private void txtContraseĂ±aActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseĂ±aActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtContraseñaActionPerformed
-
+    }//GEN-LAST:event_txtContraseĂ±aActionPerformed
+*/
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnIngresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresar1ActionPerformed
-         String Usuario = "haar";
-        String Contraseña = "1234";
-
+         String Usuario = "haar"; //Ingresar usuario aqui entre las comillas.
+        String Contrasenia = "1234"; //Ingresar contraseĂ±a aqui entre las comillas.
+        
         String User;
         String Pass;
 
         User = txtUsuario.getText();
-        Pass = txtContraseña.getText();
+        Pass = new String(txtContrasenia.getPassword());
 
-        if (User.equals(Usuario) && Pass.equals(Contraseña)) {
+        
+        if (User.equals(Usuario) && Pass.equals(Contrasenia)) {
             Menu a = new Menu();
             a.setVisible(true);
             dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Usuario o contraseĂ±a incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnIngresar1ActionPerformed
 
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
 
     }//GEN-LAST:event_txtUsuarioActionPerformed
+
+    private void txtContraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseniaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtContraseniaActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -174,7 +179,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField txtContraseña;
+    private javax.swing.JPasswordField txtContrasenia;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,7 +10,7 @@ public class Cconexion {
 
     private Connection conectar = null;
     private final String usuario = "usersql";
-    private final String contrasenia = "root2";
+    private final String contrasenia = "FAbt@2020";
     private final String bd = "haar";
     private final String ip = "localhost";
     private final String puerto = "1433";

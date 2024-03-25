@@ -8,10 +8,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-
+/**
+ * Esta clase representa la ventana para agregar un cliente.
+ */
 public class AgregarCliente extends javax.swing.JFrame {
     private final Cconexion conexion;
 
+    /**
+     * Constructor de la clase AgregarCliente.
+     */
     public AgregarCliente() {
         // Inicializa la conexión en el constructor
         setSize(1280,720);

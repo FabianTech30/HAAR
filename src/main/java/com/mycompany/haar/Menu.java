@@ -79,6 +79,7 @@ public class Menu extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCitas = new javax.swing.JTable();
+        jEliminar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
@@ -146,7 +147,7 @@ public class Menu extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(262, 508, 316, 41));
+        jPanel3.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 510, 316, 41));
 
         tblCitas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -193,6 +194,18 @@ public class Menu extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblCitas);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(151, 145, 550, 345));
+
+        jEliminar.setBackground(new java.awt.Color(153, 0, 0));
+        jEliminar.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        jEliminar.setText("ELIMINAR CITA");
+        jEliminar.setName("btnAgregarClienteClientes"); // NOI18N
+        jEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jEliminarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 510, 160, 39));
 
         jPanel4.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(391, 0, 889, -1));
 
@@ -289,6 +302,30 @@ public class Menu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEliminarActionPerformed
+        int filaSeleccionada = tblCitas.getSelectedRow();
+
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona un cliente para eliminar");
+        } else {
+            int idCliente = (int) modelo.getValueAt(filaSeleccionada, 0);
+
+            try {
+                Cconexion conexion = new Cconexion();
+                Connection con = conexion.establecerConexion();
+                PreparedStatement ps = con.prepareStatement("DELETE FROM citas WHERE numero_cita = ?");
+                ps.setInt(1, idCliente);
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Cita eliminada correctamente");
+                con.close();
+                actualizarTablaCitas(); // Actualiza la tabla después de eliminar el cliente
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
+        }
+
+    }//GEN-LAST:event_jEliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -332,6 +369,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jEliminar;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;

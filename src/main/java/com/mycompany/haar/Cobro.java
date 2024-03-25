@@ -253,7 +253,7 @@ public class Cobro extends javax.swing.JFrame {
                 PdfWriter writer = new PdfWriter(filePath);
                 PdfDocument pdf = new PdfDocument(writer);
                 Document document = new Document(pdf, PageSize.A4);
-                PdfFont font = PdfFontFactory.createFont(FontConstants.HELVETICA);
+                PdfFont font = PdfFontFactory.createFont();
                 document.add(new Paragraph("HAAR \nRecibo de Cobro").setFont(font).setFontSize(20).setBold().setUnderline().setTextAlignment(TextAlignment.CENTER).setMarginBottom(20));
                 document.add(new Paragraph("Fecha: " + timeStamp).setFont(font).setFontSize(12).setTextAlignment(TextAlignment.RIGHT).setMarginBottom(10));
                 document.add(new Paragraph("Cliente: " + clienteSeleccionado).setFont(font).setFontSize(12).setMarginBottom(10));

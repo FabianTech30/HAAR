@@ -1,19 +1,32 @@
 
 package com.mycompany.haar;
-
+import com.itextpdf.text.*;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 public class RegistroVenta extends javax.swing.JFrame {
     private final Cconexion conexion;
-    private DefaultTableModel modeloTabla; // Se agregó la declaración del modelo de la tabla
+    private DefaultTableModel modeloTabla;
     
     public RegistroVenta() {
         initComponents();
@@ -23,10 +36,9 @@ public class RegistroVenta extends javax.swing.JFrame {
         modeloTabla = (DefaultTableModel) jTableVentas.getModel();
         cargarTabla();
 
-        // Agregar ActionListener al botón jButtonEnviar
-        jButtonEnviar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                jButtonEnviarActionPerformed(evt);
+        CalendarBoxFecha.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cargarTablaPorFecha();
             }
         });
     }
@@ -42,21 +54,45 @@ public class RegistroVenta extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jEliminar = new javax.swing.JButton();
         CalendarBoxFecha = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableVentas = new javax.swing.JTable();
-        jButtonEnviar = new javax.swing.JButton();
-        jComboBoxVentas = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jButtonImprimirRegistros = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1280, 720));
+        setMinimumSize(new java.awt.Dimension(1280, 720));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 27));
+        jPanel1.setMaximumSize(new java.awt.Dimension(1280, 720));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1280, 720));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1280, 720));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel2.setMaximumSize(new java.awt.Dimension(1280, 720));
+        jPanel2.setMinimumSize(new java.awt.Dimension(1280, 720));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1280, 720));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(CalendarBoxFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 120, 70, 39));
+
+        jEliminar.setBackground(new java.awt.Color(153, 0, 0));
+        jEliminar.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        jEliminar.setText("ELIMINAR");
+        jEliminar.setName("btnAgregarClienteClientes"); // NOI18N
+        jEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jEliminarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 400, 121, 39));
+        jPanel2.add(CalendarBoxFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 400, 70, 39));
 
         jTableVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -79,7 +115,7 @@ public class RegistroVenta extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -88,178 +124,67 @@ public class RegistroVenta extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTableVentas);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 870, 190));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 860, 180));
 
-        jButtonEnviar.setText("Solicitar");
-        jButtonEnviar.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setBackground(new java.awt.Color(51, 51, 51));
+        jButton1.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("VOLVER");
+        jButton1.setName("btnVolverClientes"); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEnviarActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButtonEnviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, -1, -1));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 520, 121, 39));
 
-        jComboBoxVentas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diario", "Diario Total", "Mensual", "Mensual Total", "Cortes", "Clientes" }));
-        jComboBoxVentas.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
+        jLabel1.setText("REGISTRO DE VENTAS");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jLabel2.setText("FECHA");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 370, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jLabel3.setText("ELIMINAR REGISTRO");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 370, -1, 20));
+
+        jButtonImprimirRegistros.setText("IMPRIMIR");
+        jButtonImprimirRegistros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxVentasActionPerformed(evt);
+                jButtonImprimirRegistrosActionPerformed(evt);
             }
         });
-        jPanel2.add(jComboBoxVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, -1, -1));
+        jPanel2.add(jButtonImprimirRegistros, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 400, 100, 30));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 1190, 650));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 940, 590));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 710));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
-    String seleccion = (String) jComboBoxVentas.getSelectedItem();
-
-        // Ejecutar la consulta SQL correspondiente según la selección del JComboBox
-        if (seleccion.equals("Diario")) {
-            ejecutarConsultaDiario();
-        } else if (seleccion.equals("Diario Total")) {
-            ejecutarConsultaDiarioTotal();
-        } else if (seleccion.equals("Mensual")) {
-            ejecutarConsultaMensual();
-        } else if (seleccion.equals("Mensual Total")) {
-            ejecutarConsultaMensualTotal();
-        } else if (seleccion.equals("Cortes")) {
-            ejecutarConsultaCortes();
-        } else if (seleccion.equals("Clientes")) {
-            ejecutarConsultaClientes();
-        }
-    }
-     private void ejecutarConsultaDiario() {
-     // Consulta SQL para Diario
+   private void cargarTablaPorFecha() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaSeleccionada = sdf.format(CalendarBoxFecha.getDate());
         String query = "SELECT "
-        + "CONCAT('Fecha: ', CONVERT(varchar, FechaCobro, 23)) AS Fecha, "
-        + "Id, "
-        + "Cliente, "
-        + "TipoCorte, "
-        + "ServicioExtra, "
-        + "'Monto Adicional: $' + FORMAT(MontoAdicional, 'N2') AS MontoAdicional, "
-        + "'Subtotal: $' + FORMAT(Subtotal, 'N2') AS Subtotal, "
-        + "'IVA: $' + FORMAT(IVA, 'N2') AS IVA, "
-        + "'Total: $' + FORMAT(Total, 'N2') AS Total "
-        + "FROM Cobros "
-        + "WHERE YEAR(FechaCobro) = YEAR(GETDATE()) AND MONTH(FechaCobro) = MONTH(GETDATE()) "
-        + "ORDER BY FechaCobro";
-        ejecutarConsulta(query);
-    }//GEN-LAST:event_jButtonEnviarActionPerformed
-    private void ejecutarConsultaDiarioTotal() {
-     // Consulta SQL para Diario Total
-        String query = "SELECT "
-                + "CONCAT('Fecha: ', CONVERT(varchar, FechaCobro, 23)) AS Fecha, "
                 + "Id, "
                 + "Cliente, "
+                + "FechaCobro, "
                 + "TipoCorte, "
                 + "ServicioExtra, "
-                + "'Monto Adicional: $' + FORMAT(MontoAdicional, 'N2') AS MontoAdicional, "
-                + "'Subtotal: $' + FORMAT(Subtotal, 'N2') AS Subtotal, "
-                + "'IVA: $' + FORMAT(IVA, 'N2') AS IVA, "
-                + "'Total: $' + FORMAT(Total, 'N2') AS Total "
+                + "MontoAdicional, "
+                + "Subtotal, "
+                + "IVA, "
+                + "Total "
                 + "FROM Cobros "
-                + "WHERE YEAR(FechaCobro) = YEAR(GETDATE()) AND MONTH(FechaCobro) = MONTH(GETDATE()) "
+                + "WHERE CONVERT(date, FechaCobro) = ? "
                 + "ORDER BY FechaCobro";
-
-        ejecutarConsulta(query);
+        ejecutarConsulta(query, fechaSeleccionada);
     }
 
-    private void ejecutarConsultaMensual() {
-        // Consulta SQL para Mensual
-        // Implementa esta consulta de manera similar a las anteriores
-    }
-
-    private void ejecutarConsultaMensualTotal() {
-        // Consulta SQL para Mensual Total
-        // Implementa esta consulta de manera similar a las anteriores
-    }
-
-    private void ejecutarConsultaCortes() {
-        // Consulta SQL para Cortes
-        // Implementa esta consulta de manera similar a las anteriores
-    }
-
-    private void ejecutarConsultaClientes() {
-        // Consulta SQL para Clientes
-        // Implementa esta consulta de manera similar a las anteriores
-    }
-
-    private void ejecutarConsulta(String query) {
-       modeloTabla.setRowCount(0);
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            con = conexion.establecerConexion();
-            ps = con.prepareStatement(query);
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                // Agregar los resultados de la consulta a la tabla
-                Object[] fila = {
-                    rs.getInt("Id"),
-                    rs.getString("Cliente"),
-                    rs.getString("FechaCobro"),
-                    rs.getString("TipoCorte"),
-                    rs.getString("ServicioExtra"),
-                    rs.getString("MontoAdicional"),
-                    rs.getString("Subtotal"),
-                    rs.getString("IVA"),
-                    rs.getString("Total")
-                };
-                modeloTabla.addRow(fila);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al cargar los datos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
-    private void jComboBoxVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxVentasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxVentasActionPerformed
-
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegistroVenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegistroVenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegistroVenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegistroVenta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RegistroVenta().setVisible(true);
-            }
-        });
-    }
-     private void cargarTabla() {
+    private void ejecutarConsulta(String query, String fechaSeleccionada) {
         modeloTabla.setRowCount(0);
         Connection con = null;
         PreparedStatement ps = null;
@@ -267,8 +192,8 @@ public class RegistroVenta extends javax.swing.JFrame {
 
         try {
             con = conexion.establecerConexion();
-            String query = "SELECT * FROM Cobros";
             ps = con.prepareStatement(query);
+            ps.setString(1, fechaSeleccionada);
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -278,10 +203,10 @@ public class RegistroVenta extends javax.swing.JFrame {
                     rs.getString("FechaCobro"),
                     rs.getString("TipoCorte"),
                     rs.getString("ServicioExtra"),
-                    rs.getString("MontoAdicional"),
-                    rs.getString("Subtotal"),
-                    rs.getString("IVA"),
-                    rs.getString("Total")
+                    rs.getDouble("MontoAdicional"),
+                    rs.getDouble("Subtotal"),
+                    rs.getDouble("IVA"),
+                    rs.getDouble("Total")
                 };
                 modeloTabla.addRow(fila);
             }
@@ -303,11 +228,209 @@ public class RegistroVenta extends javax.swing.JFrame {
             }
         }
     }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Menu a = new Menu();
+        a.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEliminarActionPerformed
+        int filaSeleccionada = jTableVentas.getSelectedRow();
+
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Selecciona un cliente para eliminar");
+        } else {
+            int idCliente = (int) modeloTabla.getValueAt(filaSeleccionada, 0);
+
+            try {
+                Connection con = conexion.establecerConexion();
+                PreparedStatement ps = con.prepareStatement("DELETE FROM Cobros WHERE Id = ?");
+                ps.setInt(1, idCliente);
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente");
+                con.close();
+                cargarTabla(); // Actualiza la tabla después de eliminar el cliente
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
+        }
+
+    }//GEN-LAST:event_jEliminarActionPerformed
+
+    private void jButtonImprimirRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirRegistrosActionPerformed
+        imprimirRegistros();
+    }//GEN-LAST:event_jButtonImprimirRegistrosActionPerformed
+     private void imprimirRegistros() {
+        try {
+        String folderPath = "C:\\Users\\fabyb\\OneDrive\\Escritorio\\HAAR\\cobros\\Registro de venta";
+        File folder = new File(folderPath);
+        if (!folder.exists()) {
+            folder.mkdirs(); // Crear directorios si no existen
+        }
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String filePath = folderPath + "\\Registro_Ventas_" + timeStamp + ".pdf";
+
+        Document document = new Document();
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
+        document.open();
+
+        // Crear título "HAAR" centrado
+        Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, BaseColor.BLACK);
+        Paragraph titleParagraph = new Paragraph("HAAR", titleFont);
+        titleParagraph.setAlignment(Element.ALIGN_CENTER);
+        document.add(titleParagraph);
+
+        // Agregar espacio
+        document.add(Chunk.NEWLINE);
+
+        // Crear subtítulo "REGISTRO DE VENTAS" centrado
+        Font subtitleFont = FontFactory.getFont(FontFactory.HELVETICA, 14, BaseColor.BLACK);
+        Paragraph subtitleParagraph = new Paragraph("REGISTRO DE VENTAS", subtitleFont);
+        subtitleParagraph.setAlignment(Element.ALIGN_CENTER);
+        document.add(subtitleParagraph);
+
+        // Agregar espacio
+        document.add(Chunk.NEWLINE);
+
+        // Crear tabla para los registros de ventas
+        PdfPTable table = new PdfPTable(3);
+        table.setWidthPercentage(100);
+        table.setWidths(new float[]{2, 3, 2});
+
+        // Cabeceras de la tabla
+        Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.WHITE);
+        PdfPCell cell = new PdfPCell(new Phrase("Fecha de Cobro", headerFont));
+        cell.setBackgroundColor(BaseColor.BLACK);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+
+        cell = new PdfPCell(new Phrase("Cliente", headerFont));
+        cell.setBackgroundColor(BaseColor.BLACK);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+
+        cell = new PdfPCell(new Phrase("Total Vendido", headerFont));
+        cell.setBackgroundColor(BaseColor.BLACK);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.addCell(cell);
+
+        // Agregar datos de los registros de ventas
+        double totalIVA = 0.0; // Variable para almacenar el IVA total
+        for (int i = 0; i < jTableVentas.getRowCount(); i++) {
+            String fechaCobro = jTableVentas.getValueAt(i, 2).toString(); // Obtener la fecha de cobro
+            String cliente = jTableVentas.getValueAt(i, 1).toString(); // Obtener el cliente
+            String totalVenta = jTableVentas.getValueAt(i, 8).toString(); // Obtener el total de la venta
+            String iva = jTableVentas.getValueAt(i, 7).toString(); // Obtener el IVA
+
+            table.addCell(fechaCobro);
+            table.addCell(cliente);
+            table.addCell(totalVenta);
+
+            totalIVA += Double.parseDouble(iva); // Sumar el IVA al total
+        }
+        double totalVentas = 0.0;
+        for (int i = 0; i < jTableVentas.getRowCount(); i++) {
+            double totalVenta = Double.parseDouble(jTableVentas.getValueAt(i, 8).toString());
+            totalVentas += totalVenta;
+        }
+
+        // Agregar la tabla al documento
+        document.add(table);
+
+        // Agregar espacio
+        document.add(Chunk.NEWLINE);
+
+        // Crear resumen elegante al final del documento
+        Paragraph summaryParagraph = new Paragraph();
+        summaryParagraph.setAlignment(Element.ALIGN_CENTER);
+        summaryParagraph.add(new Chunk("Resumen", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLACK)));
+        summaryParagraph.add(Chunk.NEWLINE);
+        summaryParagraph.add(new Chunk("Número de Clientes: " + jTableVentas.getRowCount(), FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK)));
+        summaryParagraph.add(Chunk.NEWLINE);
+        summaryParagraph.add(new Chunk("IVA Total Vendido: " + totalIVA, FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK)));
+        summaryParagraph.add(Chunk.NEWLINE);
+        summaryParagraph.add(new Chunk("Total Vendido: ", FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK)));
+        summaryParagraph.add(new Chunk(String.valueOf(totalVentas), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.RED)));
+
+        
+        // Agregar resumen al documento
+        document.add(summaryParagraph);
+
+        // Agregar la fecha y hora en la esquina superior derecha
+        PdfContentByte canvas = writer.getDirectContent();
+        Rectangle rect = document.getPageSize();
+        Font dateFont = FontFactory.getFont(FontFactory.HELVETICA, 8, BaseColor.BLACK);
+        ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), dateFont), rect.getRight(), rect.getTop(), 0);
+
+        document.close();
+        JOptionPane.showMessageDialog(null, "PDF creado exitosamente en: " + filePath);
+    } catch (DocumentException | IOException e) {
+        JOptionPane.showMessageDialog(null, "Error al crear PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+
+
+        
+        
+        
+        
+        
+        
+    }
+     private void cargarTabla() {
+         modeloTabla.setRowCount(0);
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+        con = conexion.establecerConexion();
+        String query = "SELECT Id, Cliente, FechaCobro, TipoCorte, ServicioExtra, MontoAdicional, Subtotal, IVA, Total FROM Cobros";
+        ps = con.prepareStatement(query);
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Object[] fila = {
+                rs.getInt("Id"),
+                rs.getString("Cliente"),
+                rs.getString("FechaCobro"),
+                rs.getString("TipoCorte"),
+                rs.getString("ServicioExtra"),
+                rs.getDouble("MontoAdicional"),
+                rs.getDouble("Subtotal"),
+                rs.getDouble("IVA"),
+                rs.getDouble("Total")
+            };
+            modeloTabla.addRow(fila);
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al cargar los datos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser CalendarBoxFecha;
-    private javax.swing.JButton jButtonEnviar;
-    private javax.swing.JComboBox<String> jComboBoxVentas;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonImprimirRegistros;
+    private javax.swing.JButton jEliminar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
